@@ -1,0 +1,64 @@
+const bcrypt = require('bcryptjs')
+const User = require('../models/userModel')
+const {BadRequestError, UnAuthenticatedError} = require('../errors')
+const {StatusCodes} = require('http-status-codes')
+
+//@desc Register
+//@route POST /api/v1/register
+//access Public
+const registerUser = async(req,res) => {
+    const user = await User.create({...req.body})
+    const token = user.createJWT()
+
+    res.status(StatusCodes.CREATED).json({
+        name:user.name ,
+        email:user.email,
+        token
+    })
+}
+
+//@desc Login
+//@route POST /api/v1/login
+//access Public
+const loginUser = async(req,res) => {
+    const {email,password} = req.body
+    
+    if(!email || !password){
+        throw new BadRequestError('Provide Valid Credentials')
+    }
+    
+    const user = await User.findOne({email})
+
+    if(!user){
+        throw new UnAuthenticatedError('Invalid Credentials')
+    }
+
+    const checkPassword = await user.comparePassword(password)
+
+    if(!checkPassword){
+        throw new BadRequestError("Invalid Credential")
+    }
+
+    const token = user.createJWT()
+
+    res.status(StatusCodes.OK).json({
+        user:user.name ,
+        email:user.email,
+        token
+    })
+}
+
+//@desc GetUser
+//@route POST /api/v1/me
+//access Private
+const getUser = async(req,res) => {
+    const {id} = req.params
+    const user = await User.findById(id).select('-password -__v')
+    res.status(StatusCodes.OK).json(user)
+}
+
+module.exports = {
+    registerUser,
+    loginUser,
+    getUser
+}
