@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name:{
         type:String,
         required:[true , 'Please Provide Valid Name'],
@@ -22,9 +22,14 @@ const userSchema = mongoose.Schema({
         type:String,
         required:[true , "Please Provide Valid Password"],
         minlength:1
+    },
+    createdAt:{
+        type:Date,
+        default:Date.now(),
+        required:true
     }
 }, {
-    timeStamps:true
+    timestamps:true
 })
 
 userSchema.pre('save' ,async function() {

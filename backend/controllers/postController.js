@@ -23,8 +23,12 @@ const likePost = async(req,res) => {
     res.send('Liked Post')
 }
 
-const commentPost = async(req,res) => {
+const createComment = async(req,res) => {
     res.send('Commented Post')
+}
+
+const getComments = async (req,res) => {
+    res.send('All Comments')
 }
 
 module.exports - {
@@ -34,5 +38,6 @@ module.exports - {
     updatePost,
     deletePost,
     likePost,
-    commentPost
+    createComment,
+    getComments
 }

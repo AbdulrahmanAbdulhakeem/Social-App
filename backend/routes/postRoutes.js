@@ -7,7 +7,8 @@ const {
   updatePost,
   deletePost,
   likePost,
-  commentPost,
+  createComment,
+  getComments
 } = require("../controllers/postController");
 
 router.route("/").get(getAllPost).post(createPost);
@@ -18,4 +19,5 @@ router
   .patch(updatePost)
   .delete(deletePost)
   .patch(likePost)
-  .post(commentPost);
+  .post(createComment)
+  .get(getComments);
