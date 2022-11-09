@@ -1,30 +1,72 @@
+const Post = require('../models/PostModel')
+const {StatusCodes} = require('http-status-codes')
+const { BadRequestError, UnAuthenticatedError } = require('../errors')
 
 //@desc GetAllPost
 //@route GET /api/v1/post
 //access Private
 const getAllPost = async(req,res) => {
-    res.send('All Posts')
+    const post = await Post.find()
+    res.status(StatusCodes.OK).json({post})
 }
 
 //@desc GetPost
 //@route GET /api/v1/post/:id
 //access Private
 const getPost = async(req,res) => {
-    res.send('Request Post')
+    const {id} = req.params
+    const post = await Post.findById(id)
+    
+    if(!post){
+        throw new BadRequestError('Post Does Not Exist Or Has Been Deleted')
+    }
+
+    res.status(StatusCodes.OK).json(post)
 }
 
 //@desc CreatePost
 //@route POST /api/v1/post
 //access Private
 const createPost = async(req,res) => {
-    res.send('Create Post')
+    req.body.createdBy = req.user._id
+    const post = await Post.create(req.body)
+    console.log(post)
+    res.status(StatusCodes.CREATED).json({post})
 }
 
 //@desc UpdatePost
 //@route PATCH /api/v1/post/:id
 //access Private
 const updatePost = async(req,res) => {
-    res.send('Update Post')
+    const {
+        user:{id:userId},
+        body:{title,post},
+        params:{id:postId}
+    } = req
+
+    console.log(req.user)
+
+    if(title === ' ' || post === ' ' || !title || !post){
+        throw new BadRequestError('Input Cannot Be Empty')
+    }
+
+    let updatedPost = await Post.findById(postId)
+
+    if(!updatedPost) {
+        throw new BadRequestError('Post Does Not Exist Or Has Been Deleted')
+    }
+
+    if(updatedPost.createdBy.toString() !== userId){
+        throw new UnAuthenticatedError('UnAuthorized Access')
+    }
+
+    updatedPost = await Post.findByIdAndUpdate(
+        {_id:postId},
+        req.body,
+        {new:true , runValidators:true}
+    )
+
+    res.status(StatusCodes.OK).json(updatedPost)
 }
 
 //@desc DeletePost

@@ -15,13 +15,7 @@ const commentSchema = new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:'User'
         }
-    ],
-    createdAt:{
-        type:Date,
-        default:Date.now(),
-        required:true
-    }
-    
+    ],   
 } , {timestamps:true})
 
 const postSchema = new mongoose.Schema({
@@ -35,7 +29,7 @@ const postSchema = new mongoose.Schema({
         required:true,
         minlength:3
     },
-    message:{
+    post:{
         type:String,
         required:true,
         minlength:3
@@ -50,16 +44,11 @@ const postSchema = new mongoose.Schema({
             required:true
         }
     ],
-    comment:[
+    comments:[
         {
             type:commentSchema
         }
     ],
-    createdAt:{
-        type:Date,
-        default:Date.now(),
-        required:true
-    }
 },{timestamps:true})
 
 module.exports = mongoose.model('Comment' , commentSchema)
