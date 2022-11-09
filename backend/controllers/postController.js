@@ -73,7 +73,26 @@ const updatePost = async(req,res) => {
 //@route DELETE /api/v1/post/:id
 //access Private
 const deletePost = async(req,res) => {
-    res.send('Deleted Post')
+    const {
+        user:{id:userId},
+        params:{id:postId}
+    } = req
+
+    const post = await Post.findById(postId)
+
+    if(!post) {
+        throw new BadRequestError('Post Does Not Exist Or Has Been Deleted')
+    }
+
+
+    if(post.createdBy.toString() !== userId) {
+        throw new UnAuthenticatedError('UnAuthorized Access')
+    }
+
+
+    await post.remove()
+
+    res.status(StatusCodes.OK).send('Deleted')
 }
 
 //@desc LikePost
