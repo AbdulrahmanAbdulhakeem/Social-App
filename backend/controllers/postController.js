@@ -99,6 +99,33 @@ const deletePost = async(req,res) => {
 //@route GET /api/v1/post/:id
 //access Private
 const likePost = async(req,res) => {
+    const {
+        user:{id:userId},
+        params:{id:postId}
+    } = req
+
+    const post = await Post.findById(postId)
+
+    if(!post) {
+        throw new BadRequestError('Post Does Not Exist Or Has Been Deleted')
+    }
+
+    const index = post.likes.map((id) => id.toString())
+    
+    const operator = index.includes(userId) ? "$pull" : "$addToSet"
+    console.log(operator)
+    
+
+    const updatedPost = await Post.findByIdAndUpdate(
+        {_id:postId},
+        {
+            [operator]:{
+            likes:userId
+        }
+    },
+        {new:true , runValidators:true}
+    )
+
     res.send('Liked Post')
 }
 
