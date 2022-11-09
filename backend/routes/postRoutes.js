@@ -18,9 +18,9 @@ router
   .get(getPost)
   .patch(updatePost)
   .delete(deletePost)
-  .get(getComments);
 
 router.route('/like/:id').patch(likePost)
-router.route('/comment/:id').post(createComment)
+router.route('/comment/:id').post(createComment).get(getComments);
+
 
 module.exports = router

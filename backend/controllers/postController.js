@@ -30,7 +30,6 @@ const getPost = async(req,res) => {
 const createPost = async(req,res) => {
     req.body.createdBy = req.user._id
     const post = await Post.create(req.body)
-    console.log(post)
     res.status(StatusCodes.CREATED).json({post})
 }
 
@@ -154,6 +153,10 @@ const createComment = async(req,res) => {
         {new:true , runValidators:true}
     )
 
+    if(!post) {
+        throw new BadRequestError('Post Does Not Exist Or Has Been Deleted')
+    }
+
     console.log(post.comments)
     res.status(StatusCodes.OK).json('Succesfully Added Comment')
 }
@@ -162,7 +165,15 @@ const createComment = async(req,res) => {
 //@route GET /api/v1/post/:id
 //access Private
 const getComments = async (req,res) => {
-    res.send('All Comments')
+    const {id:postId} = req.params
+
+    const post = await Post.findById(postId)
+
+    if(!post) {
+        throw new BadRequestError('Post Does Not Exist Or Has Been Deleted')
+    }
+
+    res.status(StatusCodes.OK).json(post.comments)
 }
 
 module.exports = {
