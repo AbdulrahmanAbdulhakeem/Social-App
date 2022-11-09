@@ -125,15 +125,37 @@ const likePost = async(req,res) => {
     },
         {new:true , runValidators:true}
     )
-
-    res.send('Liked Post')
+    
+    res.status(StatusCodes.OK).json({length:post.likes.length})
 }
 
 //@desc CreateComment
 //@route GET /api/v1/post/:id
 //access Private
 const createComment = async(req,res) => {
-    res.send('Commented Post')
+    const {
+        user:{id:userId},
+        params:{id:postId}
+    } = req
+
+    const createdBy = userId
+    const {comment} = req.body
+
+    const post = await Post.findByIdAndUpdate(
+        postId,
+        {
+            $addToSet:{
+                comments:{
+                    createdBy,
+                    comment
+                }
+            }
+        },
+        {new:true , runValidators:true}
+    )
+
+    console.log(post.comments)
+    res.status(StatusCodes.OK).json('Succesfully Added Comment')
 }
 
 //@desc GetComments
