@@ -1,10 +1,10 @@
 const bcrypt = require('bcryptjs')
-const User = require('../models/userModel')
+const User = require('../models/UserModel')
 const {BadRequestError, UnAuthenticatedError} = require('../errors')
 const {StatusCodes} = require('http-status-codes')
 
 //@desc Register
-//@route POST /api/v1/register
+//@route POST /api/v1/user/register
 //access Public
 const registerUser = async(req,res) => {
     const user = await User.create({...req.body})
@@ -18,7 +18,7 @@ const registerUser = async(req,res) => {
 }
 
 //@desc Login
-//@route POST /api/v1/login
+//@route POST /api/v1/user/login
 //access Public
 const loginUser = async(req,res) => {
     const {email,password} = req.body
@@ -49,12 +49,10 @@ const loginUser = async(req,res) => {
 }
 
 //@desc GetUser
-//@route POST /api/v1/me
+//@route POST /api/v1/user/me
 //access Private
 const getUser = async(req,res) => {
-    const {id} = req.params
-    const user = await User.findById(id).select('-password -__v')
-    res.status(StatusCodes.OK).json(user)
+    res.status(StatusCodes.OK).json(req.user)
 }
 
 module.exports = {

@@ -21,3 +21,5 @@ router
   .patch(likePost)
   .post(createComment)
   .get(getComments);
+
+module.exports = router

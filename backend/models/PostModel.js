@@ -40,7 +40,7 @@ const postSchema = new mongoose.Schema({
         required:true,
         minlength:3
     },
-    selectedIMG:{
+    selectedImg:{
         type:String,
     },
     likes:[
