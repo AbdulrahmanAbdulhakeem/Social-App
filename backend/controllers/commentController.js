@@ -8,7 +8,39 @@ const updateComment = async(req,res) => {
 }
 
 const likeComment = async(req,res) => {
-    res.send('Like Comment')
+    const {
+        params:{post_id,comment_id},
+        user:{id:userId}
+    } = req
+
+    const post = await Post.findById(post_id)
+
+    if(!post) {
+        throw new BadRequestError('Post Does Not Exist Or Has Been Deleted')
+    }
+
+    const comment = post.comments.find((comment) => comment._id.toString() === comment_id)
+
+    if(!comment) {
+        throw new BadRequestError('Comment Does Not Exist Or Has Been Deleted')
+    }
+
+    const index = comment.likes.includes(userId) 
+    console.log(index)
+
+    if(!index) {
+        comment.likes.push(userId)
+    }else{
+        comment.likes = comment.likes.filter((id) => id === userId)
+    }
+
+    const updatedPost = await Post.findByIdAndUpdate(
+        post_id,
+        post,
+        {new:true, runValidators:true}
+    )
+
+    res.send(updatedPost.comments)
 }
 
 const deleteComment = async(req,res) => {
@@ -18,6 +50,10 @@ const deleteComment = async(req,res) => {
     } = req
     
     const post = await Post.findById(post_id)
+
+    if(!post) {
+        throw new BadRequestError('Post Does Not Exist Or Has Been Deleted')
+    }
 
     const comment = post.comments.find((comment) => comment._id.toString() === comment_id)
 

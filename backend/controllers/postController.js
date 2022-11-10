@@ -109,9 +109,9 @@ const likePost = async(req,res) => {
         throw new BadRequestError('Post Does Not Exist Or Has Been Deleted')
     }
 
-    const index = post.likes.map((id) => id.toString())
+    const like = post.likes.map((id) => id.toString())
     
-    const operator = index.includes(userId) ? "$pull" : "$addToSet"
+    const operator = like.includes(userId) ? "$pull" : "$addToSet"
     console.log(operator)
     
 
