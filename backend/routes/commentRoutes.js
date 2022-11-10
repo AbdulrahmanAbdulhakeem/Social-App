@@ -8,7 +8,10 @@ const {
 } = require("../controllers/commentController");
 
 router
-  .route("/:id")
+  .route("/:post_id/:comment_id")
   .patch(updateComment)
-  .patch(likeComment)
   .delete(deleteComment);
+
+router.route("/:post_id/:comment_id/like").patch(likeComment)
+
+module.exports = router

@@ -7,6 +7,7 @@ const app = express()
 const connectDB = require('./config/db')
 const userRoutes = require('./routes/userRoutes')
 const postRoutes = require('./routes/postRoutes')
+const commentRoutes = require('./routes/commentRoutes')
 const notFoundMiddleware = require('./middleware/not-found')
 const authMiddleware = require('./middleware/authMiddleware')
 
@@ -24,6 +25,7 @@ app.get('/' , (req,res) => {
 
 app.use('/api/v1/user',userRoutes)
 app.use('/api/v1/post',authMiddleware,postRoutes)
+app.use('/api/v1/post',authMiddleware,commentRoutes)
 
 app.use(notFoundMiddleware)
 
