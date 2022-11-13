@@ -1,7 +1,7 @@
 {
-  "name": "mern1",
+  "name": "Social-App",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Social Media Site",
   "main": "index.js",
   "scripts": {
     "start": "node backend/index.js",

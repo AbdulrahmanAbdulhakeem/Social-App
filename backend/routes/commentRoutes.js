@@ -7,11 +7,8 @@ const {
   deleteComment,
 } = require("../controllers/commentController");
 
-router
-  .route("/:post_id/:comment_id")
-  .patch(updateComment)
-  .delete(deleteComment);
+router.route("/:post_id/:comment_id").delete(deleteComment);
 
-router.route("/:post_id/:comment_id/like").patch(likeComment)
+router.route("/:post_id/:comment_id/like").patch(likeComment);
 
-module.exports = router
+module.exports = router;
