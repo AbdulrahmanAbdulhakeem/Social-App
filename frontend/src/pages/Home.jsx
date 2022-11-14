@@ -1,7 +1,23 @@
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import {useSelector} from 'react-redux'
+import Header from "../components/Header"
 
 function Home() {
+  const navigate = useNavigate()
+
+  const {user} = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    if(!user) {
+      navigate('/register')
+    }
+  },[user,navigate])
+
   return (
-    <div className="text-3xl text-red-700">Home</div>
+    <div>
+      <Header />
+    </div>
   )
 }
 
