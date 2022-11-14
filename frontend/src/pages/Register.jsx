@@ -1,9 +1,12 @@
-import e from "cors";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
+import {useDispatch , useSelector} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import {toast} from 'react-toastify'
 import { FaUserAlt } from "react-icons/fa";
+import {register , login,reset} from '../features/auth/authSlice'
 
 function Register() {
-  const [register, setRegister] = useState(true);
+  const [isRegister, setIsRegister] = useState(true);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -11,28 +14,72 @@ function Register() {
     password: "",
   });
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const {user,isSuccess,isLoading,isError,message} = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    if(isError){
+      toast.error(message)
+    }
+
+    if(isSuccess || user) {
+      navigate('/')
+    }
+
+    dispatch(reset())
+  },[user,isSuccess,isLoading,isError,message,navigate,dispatch])
+
   const { name, email, password } = formData;
 
-  const onSubmit = () => {};
+  const onSubmit = (e) => {
+    e.preventDefault()
+
+    let userData = {}
+
+    if(isRegister){
+      userData = {
+        name,
+        email,
+        password
+      }
+      
+      dispatch(register(userData))
+      console.log(user,isSuccess,isLoading,isError,message);
+    }else{
+      userData = {
+        email,
+        password
+      }
+      
+      dispatch(login(userData))
+    }
+  };
+
+  const registerSwap = (e) => {
+    e.preventDefault()
+    setIsRegister((reg) => !reg)
+  }
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
-  console.log(name, email, password);
 
   return (
     <>
-      <div className="container flex flex-col items-center my-10 p-10 bg-white rounded-lg xl:w-1/2 ">
+      <div className="container flex flex-col items-center my-10 p-10 bg-white rounded-lg border-t-8 border-emerald-900 xl:w-1/2 ">
         <h1 className="pt-3 my-3 flex text-emerald-700 text-3xl">
           <FaUserAlt className="mr-3" />
-          {register ? "Register" : "Login"}
+          {isRegister ? "Register" : "Login"}
         </h1>
 
         <div className="flex text-neutral-700 p-5 bg-white">
           <form onSubmit={onSubmit}>
-            {register && (
+            {isRegister && (
               <div>
                 <label className="block mb-2 text-lg">Name</label>
                 <input
@@ -73,7 +120,7 @@ function Register() {
             <div>
               <button
                 type="submit"
-                className="block w-80 h-12 border-none bg-emerald-700 text-neutral-700 my-3 rounded-lg md:w-96"
+                className="block w-80 h-12 border-none bg-emerald-700 text-neutral-700 my-3 rounded-lg hover:bg-emerald-900 hover:text-neutral-900 md:w-96"
               >
                 Submit
               </button>
@@ -82,27 +129,21 @@ function Register() {
             <div>
               <button
                 type="submit"
-                className="block w-80 h-12 border-none bg-emerald-700 text-neutral-700 my-3 rounded-lg md:w-96"
+                className="block w-80 h-12 border-none bg-emerald-700 text-neutral-700 my-3 rounded-lg hover:bg-emerald-900 hover:text-neutral-900 md:w-96"
               >
                 Demo Login
               </button>
             </div>
             <div className="text-emerald-700">
-              {register ? (
+              {isRegister ? (
                 <p className="text-black text-lg text-center mt-3">
                   Already A Member?&nbsp; 
-                  <button onClick={(e) => {
-                    e.preventDefault()
-                    setRegister((reg) => !reg)
-                  }}className="text-teal-700"> Login</button>
+                  <button onClick={(e) => registerSwap(e)}className="text-teal-700 hover:text-teal-900"> Login</button>
                 </p>
               ) : (
                 <p className="text-black text-lg text-center mt-3">
                   Not A Member Yet?&nbsp;
-                  <button onClick={(e) => {
-                    e.preventDefault()
-                    setRegister((reg) => !reg)
-                  }} className="text-teal-700">
+                  <button onClick={(e) => registerSwap(e)} className="text-teal-700 hover:text-teal-900">
                     Register
                   </button>
                 </p>
