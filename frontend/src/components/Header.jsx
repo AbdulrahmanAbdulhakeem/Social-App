@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { FaSignOutAlt ,FaUserAlt} from "react-icons/fa";
+import { useEffect } from "react";
+import {logout , reset} from "../features/auth/authSlice"
 
 function Header() {
   const dispatch = useDispatch();
@@ -8,20 +10,27 @@ function Header() {
 
   const { user } = useSelector((state) => state.auth);
 
-  const onLogout = (e) => {
-    e.preventDefault();
-    console.log(user.name);
+  useEffect(() => {
+    if(!user){
+      navigate('/register')
+    }
+  },[user])
+
+  const onLogout = () => {
+    dispatch(logout())
+    dispatch(reset())
+    navigate('/')
   };
 
   return (
-    <div className="relative h-20 bg-emerald-700 text-xl p-4">
+    <div className="relative h-20 bg-emerald-700 text-xl text-slate-200 p-4">
       <nav className="flex items-center justify-between">
-        <div className="p-4">
+        <div className="p-4 font-bold">
           <Link to="/">Social Media App</Link>
         </div>
         <div className="">
           <ul className="flex justify-between">
-            <li className="p-4 flex"><h1 className="flex items-center">Welcome {user.name} <FaUserAlt className="rounded-lg p-1 text-emerald-800 ml-2 bg-white h-6 w-6"/></h1>  </li>
+            <li className="p-4 flex"><h1 className="flex items-center">Welcome {user && user.name} <FaUserAlt className="rounded-lg p-1 text-emerald-800 ml-2 bg-white h-6 w-6"/></h1>  </li>
             <li className="flex items-center">
               <button
                 onClick={onLogout}

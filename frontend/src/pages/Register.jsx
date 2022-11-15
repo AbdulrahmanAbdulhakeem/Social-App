@@ -62,6 +62,18 @@ function Register() {
     setIsRegister((reg) => !reg)
   }
 
+  const demoLogin = (e) => {
+    e.preventDefault()
+
+    let userData = {
+      email:"nai@gmail.com",
+      password:"123456"
+    }
+
+    dispatch(login(userData)
+    )
+  }
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -128,7 +140,7 @@ function Register() {
 
             <div>
               <button
-                type="submit"
+                onClick={demoLogin}
                 className="block w-80 h-12 border-none bg-emerald-700 text-neutral-700 my-3 rounded-lg hover:bg-emerald-900 hover:text-neutral-900 md:w-96"
               >
                 Demo Login
