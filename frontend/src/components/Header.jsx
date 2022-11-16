@@ -34,7 +34,7 @@ function Header() {
             <li className="flex items-center">
               <button
                 onClick={onLogout}
-                className="flex items-center p-4 bg-emerald-700 text-neutral-700 rounded-lg hover:bg-emerald-900 hover:text-neutral-100"
+                className="flex items-center p-4 bg-emerald-700 text-neutral-700 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-neutral-100"
               >
                 Logout
             <FaSignOutAlt className="ml-2"/>

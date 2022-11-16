@@ -22,6 +22,13 @@ body {
   text-decoration: none;
 } */
 
+.profile-img{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
 .tw-absolute-center {
   @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
 }

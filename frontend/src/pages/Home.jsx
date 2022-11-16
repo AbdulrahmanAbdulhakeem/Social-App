@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import {useSelector} from 'react-redux'
 import Header from "../components/Header"
-import Profile from "../components/Profile"
+import {Profile} from "../components"
 
 function Home() {
   const navigate = useNavigate()

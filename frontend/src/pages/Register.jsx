@@ -1,9 +1,9 @@
-import { useState ,useEffect} from "react";
-import {useDispatch , useSelector} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
-import {toast} from 'react-toastify'
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { FaUserAlt } from "react-icons/fa";
-import {register , login,reset} from '../features/auth/authSlice'
+import { register, login, reset } from "../features/auth/authSlice";
 
 function Register() {
   const [isRegister, setIsRegister] = useState(true);
@@ -14,65 +14,66 @@ function Register() {
     password: "",
   });
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const {user,isSuccess,isLoading,isError,message} = useSelector((state) => state.auth)
+  const { user, isSuccess, isLoading, isError, message } = useSelector(
+    (state) => state.auth
+  );
 
   useEffect(() => {
-    if(isError){
-      toast.error(message)
+    if (isError) {
+      toast.error(message);
     }
 
-    if(isSuccess || user) {
-      navigate('/')
+    if (isSuccess || user) {
+      navigate("/");
     }
 
-    dispatch(reset())
-  },[user,isSuccess,isLoading,isError,message,navigate,dispatch])
+    dispatch(reset());
+  }, [user, isSuccess, isLoading, isError, message, navigate, dispatch]);
 
   const { name, email, password } = formData;
 
   const onSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    let userData = {}
+    let userData = {};
 
-    if(isRegister){
+    if (isRegister) {
       userData = {
         name,
         email,
-        password
-      }
-      
-      dispatch(register(userData))
-      console.log(user,isSuccess,isLoading,isError,message);
-    }else{
+        password,
+      };
+
+      dispatch(register(userData));
+      console.log(user, isSuccess, isLoading, isError, message);
+    } else {
       userData = {
         email,
-        password
-      }
-      
-      dispatch(login(userData))
+        password,
+      };
+
+      dispatch(login(userData));
     }
   };
 
   const registerSwap = (e) => {
-    e.preventDefault()
-    setIsRegister((reg) => !reg)
-  }
+    e.preventDefault();
+    setIsRegister((reg) => !reg);
+  };
 
   const demoLogin = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     let userData = {
-      email:"nai@gmail.com",
-      password:"123456"
-    }
+      email: "nai@gmail.com",
+      password: "123456",
+    };
 
-    dispatch(login(userData)
-    )
-  }
+    dispatch(login(userData));
+  };
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -149,13 +150,22 @@ function Register() {
             <div className="text-emerald-700">
               {isRegister ? (
                 <p className="text-black text-lg text-center mt-3">
-                  Already A Member?&nbsp; 
-                  <button onClick={(e) => registerSwap(e)}className="text-teal-700 hover:text-teal-900"> Login</button>
+                  Already A Member?&nbsp;
+                  <button
+                    onClick={(e) => registerSwap(e)}
+                    className="text-teal-700 hover:text-teal-900"
+                  >
+                    {" "}
+                    Login
+                  </button>
                 </p>
               ) : (
                 <p className="text-black text-lg text-center mt-3">
                   Not A Member Yet?&nbsp;
-                  <button onClick={(e) => registerSwap(e)} className="text-teal-700 hover:text-teal-900">
+                  <button
+                    onClick={(e) => registerSwap(e)}
+                    className="text-teal-700 hover:text-teal-900"
+                  >
                     Register
                   </button>
                 </p>
