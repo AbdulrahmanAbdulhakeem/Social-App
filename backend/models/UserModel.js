@@ -23,12 +23,17 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please Provide Valid Password"],
       minlength: 1,
+      trim:true
     },
     createdAt: {
       type: Date,
       default: Date.now(),
       required: true,
     },
+    photo:{
+      type:String,
+      default:'',
+    }
   },
   {
     timestamps: true,

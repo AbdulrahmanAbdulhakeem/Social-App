@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { FaSignOutAlt ,FaUserAlt} from "react-icons/fa";
 import { useEffect } from "react";
-import {logout , reset} from "../features/auth/authSlice"
+import {logout , reset} from "../../features/auth/authSlice"
 
 function Header() {
   const dispatch = useDispatch();
@@ -23,10 +23,10 @@ function Header() {
   };
 
   return (
-    <div className="relative h-20 bg-emerald-700 text-xl text-slate-200 p-4">
+    <div className=" bg-emerald-700 text-base text-slate-200 p-2 md:text-xl">
       <nav className="flex items-center justify-between">
         <div className="p-4 font-bold">
-          <Link to="/">Social Media App</Link>
+          <Link to="/">Social App</Link>
         </div>
         <div className="">
           <ul className="flex justify-between">
