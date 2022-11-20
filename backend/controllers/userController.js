@@ -74,7 +74,7 @@ const updateProfile = async (req, res) => {
 
   const salt = await bcrypt.genSalt(10);
   const user = await User.findById(userId);
-  console.log(userId)
+  
   if (!user) {
     throw new UnAuthenticatedError("Invalid Credentials");
   }

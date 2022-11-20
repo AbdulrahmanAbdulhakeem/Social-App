@@ -19,7 +19,7 @@ function Profile() {
 
   return (
     <div>
-      <div className="container flex flex-col bg-white mt-5 leading-7 w-72 rounded-xl md:w-96">
+      {!editProfile && <div className="container flex flex-col bg-white mt-5 leading-7 w-72 rounded-xl md:w-96">
         <div className="flex flex-col items-center">
           <h1 className="text-3xl font-normal mt-5">My Profile</h1>
           <img src={profilePic} alt="Profile Pic" className="profile-img" />
@@ -39,8 +39,8 @@ function Profile() {
             Update Profile <FaEdit className="ml-4" />
           </button>
         </div>
-      </div>
-        {editProfile && <Updateprofile />}
+      </div>}
+        {editProfile && <Updateprofile setEditProfile={setEditProfile} />}
     </div>
   );
 }
