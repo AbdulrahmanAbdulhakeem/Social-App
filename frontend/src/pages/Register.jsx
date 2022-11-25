@@ -23,7 +23,7 @@ function Register() {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      toast('Try Again');
     }
 
     if (isSuccess || user) {
@@ -48,7 +48,6 @@ function Register() {
       };
 
       dispatch(register(userData));
-      console.log(user, isSuccess, isLoading, isError, message);
     } else {
       userData = {
         email,

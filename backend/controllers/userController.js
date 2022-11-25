@@ -1,8 +1,8 @@
 const bcrypt = require("bcryptjs");
+const express = require('express')
 const User = require("../models/UserModel");
 const { BadRequestError, UnAuthenticatedError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
-const { findByIdAndUpdate } = require("../models/UserModel");
 
 //@desc Register
 //@route POST /api/v1/user/register
@@ -47,6 +47,7 @@ const loginUser = async (req, res) => {
     _id: user.id,
     name: user.name,
     email: user.email,
+    photo:user.photo,
     token,
   });
 };
@@ -63,11 +64,16 @@ const getUser = async (req, res) => {
 //@route POST /api/v1/user/profile
 //access Private
 const updateProfile = async (req, res) => {
+
   let {
     user: { id: userId },
     body: { name, email,password},
   } = req;
 
+  const photo = req.file
+  console.log(photo)
+  
+  
   if (!email || !password) {
     throw new BadRequestError("Provide Valid Credentials");
   }
@@ -87,22 +93,32 @@ const updateProfile = async (req, res) => {
   
   const token = user.createJWT();
   req.body.password = await bcrypt.hash(password, salt);
-
+  
+  const image = photo ? photo.path:user.photo
+  
+  
   const updateProfile = await User.findByIdAndUpdate(
     { _id: userId },
-    req.body,
+    {
+      ...req.body,
+      photo:image
+    },
     {
       new: true,
       runValidators: true,
     }
-  );
-
+    );
+    
+    // console.log(updateProfile)
+    
   res.status(StatusCodes.OK).json({
-    _id: user.id,
-    name: user.name,
-    email: user.email,
-    token,
-  });};
+      _id: user.id,
+      name: user.name,
+      email: user.email,
+      photo:user.photo,
+      token,
+    });
+  };
 
 module.exports = {
   registerUser,

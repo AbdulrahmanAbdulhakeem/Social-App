@@ -24,6 +24,18 @@ const login = async(userData) => {
     return data
 }
 
+//Update UserProfile
+const updateProfile = async(userData,token) => {
+    const config = {
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    }
+    const {data} = await axios.patch(API_URL + 'profile' , userData , config)
+    console.log(data)
+
+    return data
+}
 
 //Logout User
 const logout = () => {
@@ -31,10 +43,13 @@ const logout = () => {
 }
 
 
+
 const authService = {
     register,
     login,
-    logout
+    updateProfile,
+    logout,
+
 }
 
 export default authService
