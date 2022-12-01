@@ -11,6 +11,11 @@ function Profile() {
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  // console.log(user)
+
+  useEffect(() => {
+    
+  },[user])
 
   const updateProfile = (e) => {
     e.preventDefault();
@@ -23,12 +28,11 @@ function Profile() {
         <div className="container flex flex-col bg-white mt-5 leading-7 w-72 rounded-xl md:w-96">
           <div className="flex flex-col items-center">
             <h1 className="text-3xl font-normal mt-5">My Profile</h1>
-            {/* {user.photo ? (
-              <img src= {`../../../../ + ${user.photo}`} alt="profilePic" className="profile-img" />
+            {user?.imageUrl ? (
+              <img src={user.imageUrl} alt="profilePic" className="profile-img" />
             ) : (
               <img src={profilePic} alt="Profile Pic" className="profile-img" />
-            )} */}
-              <img src={profilePic} alt="Profile Pic" className="profile-img" />
+            )}
 
           </div>
           <div className="flex items-center mx-5 gap-2 my-5 mb-10">

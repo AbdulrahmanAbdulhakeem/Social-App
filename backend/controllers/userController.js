@@ -8,6 +8,13 @@ const { StatusCodes } = require("http-status-codes");
 //@route POST /api/v1/user/register
 //access Public
 const registerUser = async (req, res) => {
+  const {email} = req.body
+  const checkUser = await User.findOne({ email });
+
+  if(checkUser){
+    throw new BadRequestError('Email Is Already Used')
+  }
+
   const user = await User.create({ ...req.body });
   const token = user.createJWT();
 
@@ -15,6 +22,7 @@ const registerUser = async (req, res) => {
     _id: user.id,
     name: user.name,
     email: user.email,
+    imageUrl:user.imageUrl,
     token,
   });
 };
@@ -47,7 +55,7 @@ const loginUser = async (req, res) => {
     _id: user.id,
     name: user.name,
     email: user.email,
-    photo:user.photo,
+    imageUrl:user.imageUrl,
     token,
   });
 };
@@ -70,54 +78,52 @@ const updateProfile = async (req, res) => {
     body: { name, email,password},
   } = req;
 
-  const photo = req.file
-  console.log(photo)
+  console.log(userId) 
   
-  
-  if (!email || !password) {
+  if (!email) {
     throw new BadRequestError("Provide Valid Credentials");
   }
 
-  const salt = await bcrypt.genSalt(10);
+
   const user = await User.findById(userId);
   
   if (!user) {
     throw new UnAuthenticatedError("Invalid Credentials");
   }
   
-  const checkPassword = await user.comparePassword(password);
+  // const checkPassword = await user.comparePassword(password);
   
-  if (!checkPassword) {
-    throw new BadRequestError("Invalid Password");
-  }
+  // if (!checkPassword) {
+  //   throw new BadRequestError("Invalid Password");
+  // }
   
   const token = user.createJWT();
-  req.body.password = await bcrypt.hash(password, salt);
+  // req.body.password = await bcrypt.hash(password, salt);
   
-  const image = photo ? photo.path:user.photo
+  // const image = photo ? photo.path:user.photo
+
+  // user.email = email
+  // user.name = name
+  // user.photo = image
+  // user._id = userId
+
+  // user.isNew = false
+  // await user.save()
   
   
   const updateProfile = await User.findByIdAndUpdate(
     { _id: userId },
     {
       ...req.body,
-      photo:image
     },
     {
       new: true,
       runValidators: true,
     }
     );
+
     
-    // console.log(updateProfile)
-    
-  res.status(StatusCodes.OK).json({
-      _id: user.id,
-      name: user.name,
-      email: user.email,
-      photo:user.photo,
-      token,
-    });
+  res.status(StatusCodes.OK).json(updateProfile);
   };
 
 module.exports = {

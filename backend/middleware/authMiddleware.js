@@ -14,6 +14,7 @@ const authMiddleware = async (req, res, next) => {
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     req.user = await User.findById(payload.id).select("-password");
+    console.log(req.user)
   } catch (error) {
     throw new UnAuthenticatedError("UnAuthorized access");
   }

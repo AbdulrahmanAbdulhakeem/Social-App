@@ -31,8 +31,11 @@ const updateProfile = async(userData,token) => {
             Authorization:`Bearer ${token}`
         }
     }
-    const {data} = await axios.patch(API_URL + 'profile' , userData , config)
-    console.log(data)
+    const {data} = await axios.put(API_URL + 'profile' , userData , config)
+
+    if(data) {
+        localStorage.setItem('user' , JSON.stringify(data))
+    }
 
     return data
 }

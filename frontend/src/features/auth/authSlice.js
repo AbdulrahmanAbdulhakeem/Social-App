@@ -42,8 +42,6 @@ export const login = createAsyncThunk("auth/login", async (userData, thunkAPI) =
 
 export const updateProfile = createAsyncThunk("auth/profile", async(userData,thunkAPI) => {
   try {
-    
-    console.log(userData)
     const token = user.token
     return await authService.updateProfile(userData,token)
   } catch (error) {
