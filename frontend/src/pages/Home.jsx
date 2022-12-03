@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import {useSelector} from 'react-redux'
-import {Profile,Header} from "../components"
+import {Profile,Header,PostCreator} from "../components"
 
 function Home() {
   const navigate = useNavigate()
@@ -17,7 +17,10 @@ function Home() {
   return (
     <div>
       <Header />
+      <div className="flex flex-col md:flex-row">
       <Profile />
+      <PostCreator />
+      </div>
     </div>
   )
 }

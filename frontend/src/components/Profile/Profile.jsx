@@ -25,7 +25,7 @@ function Profile() {
   return (
     <div>
       {!editProfile && (
-        <div className="container flex flex-col bg-white mt-5 leading-7 w-72 rounded-xl md:w-96">
+        <div className="flex flex-col bg-white mt-5 mx-5 leading-7 rounded-xl md:w-96">
           <div className="flex flex-col items-center">
             <h1 className="text-3xl font-normal mt-5">My Profile</h1>
             {user?.imageUrl ? (
