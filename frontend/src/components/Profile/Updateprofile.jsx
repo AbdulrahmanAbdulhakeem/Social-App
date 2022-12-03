@@ -103,7 +103,7 @@ function Updateprofile({ setEditProfile }) {
           <div>
             <label className="block my-2 text-lg">Update Pic</label>
             <input
-              className="file-btn"
+              className="file-btn-update"
               type="file"
               accept=".png, .jpg, .jpeg"
               name="image"
