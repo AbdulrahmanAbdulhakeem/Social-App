@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaCamera, FaEdit } from "react-icons/fa";
 
@@ -8,6 +9,27 @@ function PostCreator() {
     post: "",
     image: "",
   });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const {user} = useSelector((state) => state.auth)
+  const { posts, isSuccess, isLoading, isError, message } = useSelector(
+    (state) => state.post
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast('Try Again');
+    }
+
+    if(!user){
+      navigate('/login')
+    }
+
+  }, [user, isSuccess, isLoading, isError, message, navigate, dispatch]);
+
+
 
   const { post, image } = formData;
 
