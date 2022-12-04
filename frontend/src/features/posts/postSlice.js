@@ -35,7 +35,7 @@ export const postSlice = createSlice({
         .addCase(createPost.pending,(state) => {
             state.isLoading = true
         }) 
-        .addCase(createPost, (state,action) => {
+        .addCase(createPost.fulfilled, (state,action) => {
             state.isLoading = false
             state.isSuccess = true
             state.posts.push(action.payload)

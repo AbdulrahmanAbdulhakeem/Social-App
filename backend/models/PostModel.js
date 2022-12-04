@@ -33,7 +33,7 @@ const postSchema = new mongoose.Schema(
       required: true,
       minlength: 3,
     },
-    selectedImg: {
+    imageUrl: {
       type: String,
     },
     likes: [

@@ -1,18 +1,32 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import {useSelector} from 'react-redux'
-import {Profile,Header,PostCreator} from "../components"
+import {useSelector,useDispatch} from 'react-redux'
+import { toast } from "react-toastify";
+import {Profile,Header,PostCreator, Spinner} from "../components"
 
 function Home() {
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {user} = useSelector((state) => state.auth)
+  const { posts, isSuccess, isLoading, isError, message } = useSelector(
+    (state) => state.post
+  );
 
   useEffect(() => {
-    if(!user) {
-      navigate('/register')
+    if (isError) {
+      toast('Try Again');
     }
-  },[user,navigate])
+
+    if(!user){
+      navigate('/login')
+    }
+
+  }, [user, isSuccess, isLoading, isError, message, navigate, dispatch]);
+
+  if(isLoading) {
+    return <Spinner />
+  }
 
   return (
     <div>

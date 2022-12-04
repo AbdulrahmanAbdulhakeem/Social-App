@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaCamera, FaEdit } from "react-icons/fa";
+import axios from "axios";
+import { createPost } from "../../features/posts/postSlice";
 
 function PostCreator() {
   const [formData, setFormData] = useState({
@@ -10,30 +12,52 @@ function PostCreator() {
     image: "",
   });
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const {user} = useSelector((state) => state.auth)
-  const { posts, isSuccess, isLoading, isError, message } = useSelector(
-    (state) => state.post
-  );
-
-  useEffect(() => {
-    if (isError) {
-      toast('Try Again');
-    }
-
-    if(!user){
-      navigate('/login')
-    }
-
-  }, [user, isSuccess, isLoading, isError, message, navigate, dispatch]);
-
+  const dispatch = useDispatch()
 
 
   const { post, image } = formData;
 
-  const onSubmit = () => {};
+  const onSubmit = async(e) => {
+    e.preventDefault()
+
+    let imageUrl;
+    let userData = {}
+
+    if(image){
+      const formData = new FormData();
+      formData.append("image", image);
+
+      const { data } = await axios({
+        method: "post",
+        url: "https://api.imgbb.com/1/upload?key=28c18729cdee049636035b7dc7a63ea3",
+        data: formData,
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+
+      console.log(data)
+
+      imageUrl = data.data.url;
+
+      let postData = {
+        post,
+        imageUrl,
+      };
+
+      dispatch(createPost(postData));
+    }
+
+    if(!image) {
+      imageUrl = ""
+      let postData = {
+        post,
+        imageUrl
+      }
+
+      dispatch(createPost(postData))
+    }
+  };
 
   const onChange = (e) => {
     setFormData((prevState) => ({
