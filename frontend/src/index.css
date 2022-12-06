@@ -29,6 +29,15 @@ body {
   margin-top: 1rem;
   margin-bottom: 1.5rem;
 }
+
+.avatar-img{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
 .tw-absolute-center {
   @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
 }

@@ -1,10 +1,16 @@
-import { useEffect } from "react"
+import React,{ useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import {useSelector,useDispatch} from 'react-redux'
 import { toast } from "react-toastify";
 import {Profile,Header,PostCreator, Spinner} from "../components"
+import PostSection from "./PostSection";
+import { getAllPosts, reset } from "../features/posts/postSlice";
+// import React from "react";
+
+export const DataContext = React.createContext();
 
 function Home() {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,23 +25,29 @@ function Home() {
     }
 
     if(!user){
-      navigate('/login')
+      navigate('/register')
     }
 
-  }, [user, isSuccess, isLoading, isError, message, navigate, dispatch]);
+    dispatch(getAllPosts());  
+
+  }, []);
+  
+  console.log(posts)
 
   if(isLoading) {
     return <Spinner />
   }
 
   return (
+    <DataContext.Provider value={{posts}}>
     <div>
       <Header />
       <div className="flex flex-col md:flex-row">
       <Profile />
-      <PostCreator />
+      <PostSection />
       </div>
     </div>
+    </DataContext.Provider>
   )
 }
 

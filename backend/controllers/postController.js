@@ -6,7 +6,7 @@ const { BadRequestError, UnAuthenticatedError } = require("../errors");
 //@route GET /api/v1/post
 //access Private
 const getAllPost = async (req, res) => {
-  const post = await Post.find();
+  const post = await Post.find().populate('createdBy' ,'name imageUrl' );
   res.status(StatusCodes.OK).json({ post });
 };
 

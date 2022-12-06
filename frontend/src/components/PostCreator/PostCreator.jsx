@@ -36,7 +36,7 @@ function PostCreator() {
         },
       });
 
-      console.log(data)
+      // console.log(data)
 
       imageUrl = data.data.url;
 
@@ -72,11 +72,11 @@ function PostCreator() {
       image: e.target.files[0],
     }));
   };
-  console.log(image , post)
+  // console.log(image , post)
 
   return (
-    <div className="border-emerald-900 md:w-2/4">
-      <div className="container flex flex-col bg-white mx-5 mt-5 leading-7 rounded-xl md:">
+    <div className="border-emerald-900 w-11/12">
+      <div className="container flex flex-col bg-white mx-5 mt-5 leading-7 rounded-xl">
         <form onSubmit={onSubmit} encType="multipart/form-data">
           <input
             className="m-3 p-3 mb-3 border-emerald-700 border-2 rounded-md w-11/12 h-16 md: focus:outline-none"
