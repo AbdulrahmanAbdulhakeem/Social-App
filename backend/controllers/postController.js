@@ -30,7 +30,7 @@ const getPost = async (req, res) => {
 const createPost = async (req, res) => {
   req.body.createdBy = req.user._id;
   const post = await Post.create(req.body);
-  res.status(StatusCodes.CREATED).json({ post });
+  res.status(StatusCodes.CREATED).json(post);
 };
 
 //@desc UpdatePost

@@ -1,8 +1,8 @@
 import { useState ,useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { FaCamera, FaEdit } from "react-icons/fa";
+import {useNavigate} from "react-router-dom";
+import {FaCamera, FaEdit } from "react-icons/fa";
 import axios from "axios";
 import { createPost } from "../../features/posts/postSlice";
 

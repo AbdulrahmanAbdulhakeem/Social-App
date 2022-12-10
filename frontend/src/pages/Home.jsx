@@ -32,8 +32,6 @@ function Home() {
 
   }, []);
   
-  console.log(posts)
-
   if(isLoading) {
     return <Spinner />
   }
