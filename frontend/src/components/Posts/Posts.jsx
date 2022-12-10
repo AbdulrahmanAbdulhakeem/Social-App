@@ -5,12 +5,12 @@ import Post from './Post/Post'
 
 function Posts() {
     const {posts} = useContext(DataContext)
-    const {post} = posts
-    // console.log(post)
+    // const {post} = posts
+    console.log(posts)
 
   return (
     <div>
-        {post && post.map((posts) => (
+        {posts && posts.map((posts) => (
             <div key={posts._id}>
               <Post posts = {posts}/>
             </div>

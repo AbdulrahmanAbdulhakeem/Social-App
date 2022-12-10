@@ -16,15 +16,36 @@ function Post({ posts }) {
 
 const millisToMinutesAndSeconds = (millis) => {
     let minutes = Math.floor(millis / 60000);
+    if(minutes <= 1) {
+      return `${minutes} minute`
+    }
+
     if(minutes <= 60){
         const howLong = `${minutes} minutes`
         return howLong
     }
 
+
     let howLong = `${(minutes/60).toFixed(0)} hours`
 
-    if((minutes/60).toFixed(0) == 1) {
+    //For Changing to Hour Format When Its Get To 60 Minutes
+    if((minutes/60).toFixed(0) === 1) {
         return `${(minutes/60).toFixed(0)} hour`        
+    }
+
+    // if(minutes > 1440) {
+    //   return `${(min)}`
+    // }
+
+    //For Calculating Time Passed
+    const dayCalc = (minutes/60).toFixed(0)
+
+    if(dayCalc > 24 && (dayCalc/24).toFixed(0) === 1) {
+      return `${(dayCalc/24).toFixed(0)} day`
+    }
+
+    if(dayCalc > 24) {
+      return `${(dayCalc/24).toFixed(0)} days`
     }
 
     return howLong
@@ -60,19 +81,19 @@ const millisToMinutesAndSeconds = (millis) => {
         </div>
         <div className="my-5 mx-5">
           <p>{posts.post}</p>
-          {posts.imageUrl && (
-            <img src={posts.imageUrl} alt="profilePic" className="m-5" />
+          {posts?.imageUrl && (
+            <img src={posts.imageUrl} alt="profilePic" className="flex items-center h-96 md:w-full h-1/2" />
           )}
         </div>
         <div className="flex gap-2">
           <button
             onClick={likePost}
-            className="flex w-20 p-2 items-center justify-center gap-2 border-none bg-emerald-700 text-neutral-700 my-3 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white md:mx-auto">            
+            className="flex w-20 p-2 items-center justify-center gap-2 border-none bg-emerald-700 text-neutral-700 m-4 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white">            
             <FaThumbsUp />{posts.likes.length}
           </button>
           <button
             onClick={commentOnPost}
-            className="flex w-20 p-2 gap-2 items-center justify-center border-none bg-emerald-700 text-neutral-700 my-3 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white md:mx-auto"
+            className="flex w-20 p-2 gap-2 items-center justify-center border-none bg-emerald-700 text-neutral-700 my-3 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white"
           >
             <FaComment />{posts.comments.length}
           </button>
