@@ -86,7 +86,9 @@ const deletePost = async (req, res) => {
 
   await post.remove();
 
-  res.status(StatusCodes.OK).send("Deleted");
+  const posts = await Post.find().sort('-createdAt').populate('createdBy' ,'name imageUrl' );
+
+  res.status(StatusCodes.OK).json(posts);
 };
 
 //@desc LikePost

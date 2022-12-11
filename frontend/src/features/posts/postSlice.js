@@ -55,6 +55,22 @@ export const likePost = createAsyncThunk('post/like' , async(id, thunkAPI) => {
     }
 })
 
+export const deletePost = createAsyncThunk('post/delete' , async(id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        console.log(token)
+        return await postService.deletePost(id , token)   
+    } catch (error) {
+        const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+        return thunkAPI.rejectWithValue(message)   
+    }
+})
+
 export const postSlice = createSlice({
     name:'post',
     initialState,
@@ -98,6 +114,19 @@ export const postSlice = createSlice({
             state.posts = action.payload
         })
         .addCase(likePost.rejected,(state,action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(deletePost.pending,(state) => {
+            state.isLoading = true
+        }) 
+        .addCase(deletePost.fulfilled, (state,action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.posts = action.payload
+        })
+        .addCase(deletePost.rejected,(state,action) => {
             state.isLoading = false
             state.isError = true
             state.message = action.payload
