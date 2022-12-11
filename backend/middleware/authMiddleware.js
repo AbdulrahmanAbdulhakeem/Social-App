@@ -4,6 +4,7 @@ const User = require("../models/UserModel");
 
 const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
+  console.log(req.params)
 
   if (!authHeader || !authHeader.startsWith("Bearer")) {
     throw new UnAuthenticatedError("UnAuthorized");

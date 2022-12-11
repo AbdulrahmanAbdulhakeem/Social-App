@@ -19,20 +19,33 @@ const createPost = async(postData,token) => {
 
 //Get All Post
 const getAllPosts = async(token) => {
-    // console.log(postData)
+    const config  = {
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    }
+    
+    const {data} = await axios.get(API_URL,config)
+    return data
+}
+
+//Like Post 
+const likePost = async(postId , token) => {
     const config  = {
         headers:{
             Authorization:`Bearer ${token}`
         }
     }
 
-    const {data} = await axios.get(API_URL,config)
+    const {data} = await axios.patch(API_URL + 'like/' + postId ,{params:{id:postId}}, config)
     console.log(data)
+
     return data
 }
 
 const postService = {
     createPost,
     getAllPosts,
+    likePost,
 }
 export default postService

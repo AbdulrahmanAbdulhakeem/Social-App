@@ -1,13 +1,19 @@
 import React from "react";
 import profilePic from "../../../assets/blank-pic.png";
 import {FaThumbsUp,FaComment} from 'react-icons/fa'
+import { useDispatch } from "react-redux";
+import { likePost } from "../../../features/posts/postSlice";
 
 function Post({ post }) {
+  const dispatch = useDispatch()
 
-    const likePost = () => {}
+    // const likePost = () => {
+     
+    // }
+    
     const commentOnPost = () => {}
 
-  // console.log(post);
+  // console.log(post._id);
   const { createdBy: user } = post;
   const date = new Date() - new Date(post.createdAt)
   // console.log(user )
@@ -52,7 +58,7 @@ const millisToMinutesAndSeconds = (millis) => {
   }
 
   const currentDate = millisToMinutesAndSeconds(date)
-  console.log(currentDate)
+  // console.log(currentDate)
   // console.log(user)
   return (
     <div className="border-emerald-900 w-11/12">
@@ -86,7 +92,7 @@ const millisToMinutesAndSeconds = (millis) => {
         </div>
         <div className="flex gap-2">
           <button
-            onClick={likePost}
+            onClick={() => dispatch(likePost(post._id))}
             className="flex w-20 p-2 items-center justify-center gap-2 border-none bg-emerald-700 text-neutral-700 m-4 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white">            
             <FaThumbsUp />{post?.likes?.length}
           </button>

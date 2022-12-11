@@ -6,13 +6,13 @@ import Post from './Post/Post'
 function Posts() {
     const {posts} = useContext(DataContext)
     // const {post} = posts
-    console.log(posts)
+    // console.log(posts)
 
   return (
     <div>
         {posts && posts.map((post) => (
             <div >
-              <Post key={posts._id} post = {post}/>
+              <Post key={post._id} post = {post}/>
             </div>
         ))}
     </div>
