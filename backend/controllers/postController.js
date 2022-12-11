@@ -118,7 +118,9 @@ const likePost = async (req, res) => {
     { new: true, runValidators: true }
   );
 
-  res.status(StatusCodes.OK).json(post);
+  const posts = await Post.find().sort('-createdAt').populate('createdBy' ,'name imageUrl' );
+
+  res.status(StatusCodes.OK).json(posts);
 };
 
 //@desc CreateComment
