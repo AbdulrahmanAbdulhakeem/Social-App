@@ -57,6 +57,8 @@ function PostCreator() {
 
       dispatch(createPost(postData))
     }
+
+    toast('Beware Post Can Be Delted Till some Minute Has Passed')
   };
 
   const onChange = (e) => {

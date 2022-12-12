@@ -6,7 +6,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { register, login, reset } from "../features/auth/authSlice";
 
 function Register() {
-  const [isRegister, setIsRegister] = useState(true);
+  const [isRegister, setIsRegister] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",

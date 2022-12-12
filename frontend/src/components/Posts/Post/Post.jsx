@@ -1,25 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import profilePic from "../../../assets/blank-pic.png";
 import { FaThumbsUp, FaComment } from "react-icons/fa";
-import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete, AiOutlineEdit } from "react-icons/ai";
+// import Modal  from 'react-responsive-modal';
+// import Popup from 'reactjs-popup';
 import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../features/posts/postSlice";
+import CommentSection from "../../../pages/CommentSection";
 
 function Post({ post }) {
+  const [viewComment , setViewComment] = useState(false)
+
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
 
-  // const deletePost = () => {
 
-  // }
-
-  const commentOnPost = () => {};
-
-  // console.log(post._id);
   const { createdBy: userDetails } = post;
   const date = new Date() - new Date(post.createdAt);
-  // console.log(user._id === userDetails._id )
-
+  
   const millisToMinutesAndSeconds = (millis) => {
     let minutes = Math.floor(millis / 60000);
     if (minutes <= 1) {
@@ -30,37 +28,42 @@ function Post({ post }) {
       const howLong = `${minutes} minutes`;
       return howLong;
     }
-
+    
     let howLong = `${(minutes / 60).toFixed(0)} hours`;
-
+    
     //For Changing to Hour Format When Its Get To 60 Minutes
     if ((minutes / 60).toFixed(0) === 1) {
       return `${(minutes / 60).toFixed(0)} hour`;
     }
-
+    
     // if(minutes > 1440) {
-    //   return `${(min)}`
-    // }
+      //   return `${(min)}`
+      // }
+      
+      //For Calculating Time Passed
+      const dayCalc = (minutes / 60).toFixed(0);
+      
+      if (dayCalc > 24 && (dayCalc / 24).toFixed(0) === 1) {
+        return `${(dayCalc / 24).toFixed(0)} day`;
+      }
+      
+      if (dayCalc > 24) {
+        return `${(dayCalc / 24).toFixed(0)} days`;
+      }
+      
+      return howLong;
+    };
+    
+    const currentDate = millisToMinutesAndSeconds(date);
+    // console.log(currentDate)
+    // console.log(userDetails)
+    const [open, setOpen] = React.useState(false);
+  
+    const onOpenModal = () => setOpen(true);
+    const onCloseModal = () => setOpen(false);
 
-    //For Calculating Time Passed
-    const dayCalc = (minutes / 60).toFixed(0);
-
-    if (dayCalc > 24 && (dayCalc / 24).toFixed(0) === 1) {
-      return `${(dayCalc / 24).toFixed(0)} day`;
-    }
-
-    if (dayCalc > 24) {
-      return `${(dayCalc / 24).toFixed(0)} days`;
-    }
-
-    return howLong;
-  };
-
-  const currentDate = millisToMinutesAndSeconds(date);
-  // console.log(currentDate)
-  // console.log(userDetails)
-  return (
-    <div className="border-emerald-900 w-11/12">
+    return (
+      <div className="border-emerald-900 w-11/12">
       <div className="container flex flex-col bg-white mx-5 mt-5 leading-7 rounded-xl">
         <div className="flex items-center justify-between">
           <div className="flex items-center m-5">
@@ -80,7 +83,11 @@ function Post({ post }) {
             </div>
           </div>
           {user?._id === userDetails?._id && (
-            <div className="m-10">
+            <div className="m-10 flex">
+              {/* <AiOutlineEdit className="mx-5" onClick={onOpenModal} />
+              <Modal open={false} onClose={onCloseModal} center>
+                <h2>Simple centered modal</h2>
+              </Modal> */}
               <AiFillDelete onClick={() => dispatch(deletePost(post._id))} />
             </div>
           )}
@@ -104,13 +111,14 @@ function Post({ post }) {
             {post?.likes?.length}
           </button>
           <button
-            onClick={commentOnPost}
+            onClick={() => setViewComment((comment) => !comment)}
             className="flex w-20 p-2 gap-2 items-center justify-center border-none bg-emerald-700 text-neutral-700 m-4 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white"
           >
             <FaComment />
             {post?.comments?.length}
           </button>
         </div>
+        {viewComment && <CommentSection />}
       </div>
     </div>
   );
