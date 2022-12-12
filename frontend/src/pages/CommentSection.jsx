@@ -1,10 +1,10 @@
 import React from 'react'
 import { CommentCreator } from '../components'
 
-function CommentSection() {
+function CommentSection({postId}) {
   return (
     <div>
-        <CommentCreator />
+        <CommentCreator postId = {postId}/>
     </div>
   )
 }

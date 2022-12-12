@@ -59,11 +59,11 @@ export const likePost = createAsyncThunk('post/like' , async(id, thunkAPI) => {
 })
 
 //Comment On Specific Post
-export const commentOnPost = createAsyncThunk('post/comment' , async(id, thunkAPI) => {
+export const commentOnPost = createAsyncThunk('post/comment' , async(commentData, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         // console.log(token)
-        return await postService.commentOnPost(id , token)   
+        return await postService.commentOnPost(commentData , token)   
     } catch (error) {
         const message =
         (error.response &&

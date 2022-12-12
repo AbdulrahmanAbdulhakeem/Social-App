@@ -44,14 +44,14 @@ const likePost = async(postId , token) => {
 }
 
 //Comment On Post
-const commentOnPost = async(postId , token) => {
+const commentOnPost = async({comment , postId} , token) => {
     const config  = {
         headers:{
             Authorization:`Bearer ${token}`
         }
     }
 
-    const {data} = await axios.post(API_URL + postId , config)
+    const {data} = await axios.post(API_URL + `comment/${postId}` , {comment} , config)
     console.log(data)
 
     return data

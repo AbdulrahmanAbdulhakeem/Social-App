@@ -1,17 +1,21 @@
 import React from "react";
 import { useState } from "react";
 import { FaCamera, FaEdit } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { commentOnPost } from "../../features/posts/postSlice";
 
-function CommentCreator() {
+function CommentCreator({postId}) {
   const [comment, setComment] = useState("");
+  const dispatch = useDispatch()
 
   const onSubmit = (e) => {
     e.preventDefault()
 
-    let userData = {
-        comment
+    let commentData = {
+        comment,
+        postId
     }
-    
+    dispatch(commentOnPost(commentData))
   };
 
   return (
