@@ -43,6 +43,20 @@ const likePost = async(postId , token) => {
     return data
 }
 
+//Comment On Post
+const CommentOnPost = async(postId , token) => {
+    const config  = {
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    }
+
+    const {data} = await axios.post(API_URL + postId , config)
+    console.log(data)
+
+    return data
+}
+
 //Delete Post 
 const deletePost = async(postId , token) => {
     const config  = {
@@ -50,17 +64,19 @@ const deletePost = async(postId , token) => {
             Authorization:`Bearer ${token}`
         }
     }
-
+    
     const {data} = await axios.delete(API_URL + postId , config)
     console.log(data)
-
+    
     return data
 }
+
 
 const postService = {
     createPost,
     getAllPosts,
     likePost,
     deletePost,
+    CommentOnPost
 }
 export default postService

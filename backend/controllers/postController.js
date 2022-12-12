@@ -154,7 +154,9 @@ const createComment = async (req, res) => {
     throw new BadRequestError("Post Does Not Exist Or Has Been Deleted");
   }
 
-  res.status(StatusCodes.OK).json("Succesfully Added Comment");
+  const posts = await Post.find().sort('-createdAt').populate('createdBy' ,'name imageUrl' );
+
+  res.status(StatusCodes.OK).json(posts);
 };
 
 //@desc GetComments
