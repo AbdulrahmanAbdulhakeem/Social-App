@@ -44,7 +44,7 @@ const likePost = async(postId , token) => {
 }
 
 //Comment On Post
-const CommentOnPost = async(postId , token) => {
+const commentOnPost = async(postId , token) => {
     const config  = {
         headers:{
             Authorization:`Bearer ${token}`
@@ -77,6 +77,6 @@ const postService = {
     getAllPosts,
     likePost,
     deletePost,
-    CommentOnPost
+    commentOnPost,
 }
 export default postService

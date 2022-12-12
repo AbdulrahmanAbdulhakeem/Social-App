@@ -9,6 +9,7 @@ const initialState = {
     message:''
 }
 
+//Create Post
 export const createPost = createAsyncThunk('post/create' , async(postData,thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
@@ -24,6 +25,7 @@ export const createPost = createAsyncThunk('post/create' , async(postData,thunkA
     }
 })
 
+//Get All Post
 export const getAllPosts = createAsyncThunk('post/getAll' , async(_,thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
@@ -39,6 +41,7 @@ export const getAllPosts = createAsyncThunk('post/getAll' , async(_,thunkAPI) =>
     }
 })
 
+//Like Specific Post
 export const likePost = createAsyncThunk('post/like' , async(id, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
@@ -55,6 +58,24 @@ export const likePost = createAsyncThunk('post/like' , async(id, thunkAPI) => {
     }
 })
 
+//Comment On Specific Post
+export const commentOnPost = createAsyncThunk('post/comment' , async(id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        // console.log(token)
+        return await postService.commentOnPost(id , token)   
+    } catch (error) {
+        const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+        return thunkAPI.rejectWithValue(message)   
+    }
+})
+
+//Delete Post
 export const deletePost = createAsyncThunk('post/delete' , async(id, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
@@ -127,6 +148,19 @@ export const postSlice = createSlice({
             state.posts = action.payload
         })
         .addCase(deletePost.rejected,(state,action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(commentOnPost.pending,(state) => {
+            state.isLoading = true
+        }) 
+        .addCase(commentOnPost.fulfilled, (state,action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.posts = action.payload
+        })
+        .addCase(commentOnPost.rejected,(state,action) => {
             state.isLoading = false
             state.isError = true
             state.message = action.payload
