@@ -3,6 +3,7 @@ import profilePic from "../../../assets/blank-pic.png";
 import { AiFillDelete, AiOutlineEdit } from "react-icons/ai";
 import { FaThumbsUp } from "react-icons/fa";
 import { useDispatch } from "react-redux";
+import { likeComment } from "../../../features/posts/postSlice";
 
 function Comment({ comment, post }) {
   const dispatch = useDispatch();
@@ -12,6 +13,15 @@ function Comment({ comment, post }) {
   // const { comments } = post;
   const date = new Date() - new Date(post.createdAt);
   // console.log(comment);
+
+  const onLikeComment = () => {
+    let commentData = {
+      postId:post._id,
+      commentId:comment._id
+    }
+
+    dispatch(likeComment(commentData))
+  }
 
   const millisToMinutesAndSeconds = (millis) => {
     let minutes = Math.floor(millis / 60000);
@@ -69,7 +79,7 @@ function Comment({ comment, post }) {
         <p className="text-lg">{comment.comment}</p>
 
         <button
-          // onClick={() => dispatch(likePost(post._id))}
+          onClick={onLikeComment}
           className="flex w-20 p-2 items-center mt-5 justify-center border-none gap-2 bg-emerald-700 text-neutral-700 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white"
         >
           <FaThumbsUp />

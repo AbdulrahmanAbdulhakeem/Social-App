@@ -72,14 +72,14 @@ const deletePost = async(postId , token) => {
 }
 
 //Like Comment
-const likeComment = async({commentId :comment_id  , postId:post_id} , token) => {
+const likeComment = async({ postId:post_id ,commentId :comment_id } , token) => {
     const config  = {
         headers:{
             Authorization:`Bearer ${token}`
         }
     }
 
-    const {data} = await axios.post(API_URL + `${post_id}/${comment_id}/like` , config)
+    const {data} = await axios.patch(API_URL + `${post_id}/${comment_id}/like`,{params:{post_id , comment_id}} , config)
     console.log(data)
 
     return data

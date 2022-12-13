@@ -20,7 +20,7 @@ function Comments({ post }) {
           {post.comments &&
             post?.comments.slice(0, next)?.map((comment) => (
               <div>
-                <Comment key={post._id} comment={comment} post={post} />
+                <Comment key={comment._id} comment={comment} post={post} />
               </div>
             ))}
         </div>

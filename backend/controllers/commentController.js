@@ -39,7 +39,10 @@ const likeComment = async (req, res) => {
     runValidators: true,
   });
 
-  res.status(StatusCodes.OK).json(updatedPost.comments);
+  const posts = await Post.find().sort('-createdAt').populate('createdBy' ,'name imageUrl' );
+
+  res.status(StatusCodes.OK).json(posts);
+
 };
 
 //@desc deleteComment
