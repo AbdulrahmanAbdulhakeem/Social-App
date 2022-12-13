@@ -3,7 +3,6 @@ import Comment from "./Comment/Comment";
 
 const imagePerRow = 5;
 function Comments({ post }) {
-  console.log(post);
   const [next, setNext] = useState(imagePerRow);
 
   const handleMoreComments = () => {
