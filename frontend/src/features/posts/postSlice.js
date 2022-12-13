@@ -76,7 +76,7 @@ export const commentOnPost = createAsyncThunk('post/comment' , async(commentData
 })
 
 //Like Comment
-export const likeComment = createAsyncThunk('post/comment' , async(commentData, thunkAPI) => {
+export const likeComment = createAsyncThunk('post/likeComment' , async(commentData, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         // console.log(token)
