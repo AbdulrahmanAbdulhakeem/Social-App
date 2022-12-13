@@ -6,7 +6,7 @@ const { BadRequestError, UnAuthenticatedError } = require("../errors");
 //@route GET /api/v1/post
 //access Private
 const getAllPost = async (req, res) => {
-  const post = await Post.find().sort('-createdAt').populate('createdBy' ,'name imageUrl' );
+  const post = await Post.find().sort('-createdAt').populate('createdBy' ,'name imageUrl' ).populate('comments.createdBy' , 'name imageUrl');
   res.status(StatusCodes.OK).json(post);
 };
 
@@ -162,20 +162,18 @@ const createComment = async (req, res) => {
 //@desc GetComments
 //@route GET /api/v1/post/:id
 //access Private
-const getComments = async (req, res) => {
-  const { id: postId } = req.params;
+// const getComments = async (req, res) => {
+//   const { id: postId } = req.params;
 
-  const post = await Post.findById(postId);
+//   const post = await Post.findById(postId).sort('-createdAt').populate('comments.createdBy' ,'name imageUrl' );
 
-  if (!post) {
-    throw new BadRequestError("Post Does Not Exist Or Has Been Deleted");
-  }
-
-  const posts = await Post.find().sort('-createdAt').populate('comments.createdBy' ,'name imageUrl' );
+//   if (!post) {
+//     throw new BadRequestError("Post Does Not Exist Or Has Been Deleted");
+//   }
 
 
-  res.status(StatusCodes.OK).json(posts);
-};
+//   res.status(StatusCodes.OK).json(post.comments);
+// };
 
 module.exports = {
   getAllPost,
@@ -185,5 +183,4 @@ module.exports = {
   deletePost,
   likePost,
   createComment,
-  getComments,
 };
