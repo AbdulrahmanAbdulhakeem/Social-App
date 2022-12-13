@@ -171,7 +171,10 @@ const getComments = async (req, res) => {
     throw new BadRequestError("Post Does Not Exist Or Has Been Deleted");
   }
 
-  res.status(StatusCodes.OK).json(post.comments);
+  const posts = await Post.find().sort('-createdAt').populate('comments.createdBy' ,'name imageUrl' );
+
+
+  res.status(StatusCodes.OK).json(posts);
 };
 
 module.exports = {

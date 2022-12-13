@@ -118,7 +118,7 @@ function Post({ post }) {
             {post?.comments?.length}
           </button>
         </div>
-        {viewComment && <CommentSection postId={post?._id}/>}
+        {viewComment && <CommentSection postId={post?._id} post = {post}/>}
       </div>
     </div>
   );

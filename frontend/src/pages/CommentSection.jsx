@@ -1,10 +1,11 @@
 import React from 'react'
-import { CommentCreator } from '../components'
+import { CommentCreator, Comments } from '../components'
 
-function CommentSection({postId}) {
+function CommentSection({postId , post}) {
   return (
-    <div>
-        <CommentCreator postId = {postId}/>
+    <div className='bg-slate-200'>
+        <CommentCreator postId = {postId}  />
+        <Comments post = {post} />
     </div>
   )
 }
