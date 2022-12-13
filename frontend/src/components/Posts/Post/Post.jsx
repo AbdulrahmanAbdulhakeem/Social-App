@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../features/posts/postSlice";
 import CommentSection from "../../../pages/CommentSection";
 
+export const StateContext = React.createContext();
+
 function Post({ post }) {
   const [viewComment , setViewComment] = useState(false)
 
@@ -57,12 +59,10 @@ function Post({ post }) {
     const currentDate = millisToMinutesAndSeconds(date);
     // console.log(currentDate)
     // console.log(userDetails)
-    const [open, setOpen] = React.useState(false);
   
-    const onOpenModal = () => setOpen(true);
-    const onCloseModal = () => setOpen(false);
 
     return (
+      <StateContext.Provider value={{setViewComment}}>
       <div className="border-emerald-900 w-11/12">
       <div className="container flex flex-col bg-white mx-5 mt-5 leading-7 rounded-xl">
         <div className="flex items-center justify-between">
@@ -118,9 +118,10 @@ function Post({ post }) {
             {post?.comments?.length}
           </button>
         </div>
-        {viewComment && <CommentSection postId={post?._id} post = {post} setViewComment={setViewComment}/>}
+        {viewComment && <CommentSection postId={post?._id} post={post}/>}
       </div>
     </div>
+    </StateContext.Provider>
   );
 }
 

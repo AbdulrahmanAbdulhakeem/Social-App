@@ -71,6 +71,20 @@ const deletePost = async(postId , token) => {
     return data
 }
 
+//Like Comment
+const likeComment = async({commentId :comment_id  , postId:post_id} , token) => {
+    const config  = {
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    }
+
+    const {data} = await axios.post(API_URL + `${post_id}/${comment_id}/like` , config)
+    console.log(data)
+
+    return data
+}
+
 
 const postService = {
     createPost,
@@ -78,5 +92,6 @@ const postService = {
     likePost,
     deletePost,
     commentOnPost,
+    likeComment,
 }
 export default postService

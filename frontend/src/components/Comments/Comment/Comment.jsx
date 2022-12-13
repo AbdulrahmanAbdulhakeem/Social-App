@@ -9,9 +9,9 @@ function Comment({ comment, post }) {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const { createdBy: userDetails } = post;
-  const { comments } = post;
+  // const { comments } = post;
   const date = new Date() - new Date(post.createdAt);
-  console.log(comment);
+  // console.log(comment);
 
   const millisToMinutesAndSeconds = (millis) => {
     let minutes = Math.floor(millis / 60000);

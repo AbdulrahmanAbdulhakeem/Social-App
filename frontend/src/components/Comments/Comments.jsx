@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { StateContext } from "../Posts/Post/Post";
 import Comment from "./Comment/Comment";
 
 const imagePerRow = 5;
-function Comments({ post,setViewComment }) {
+
+function Comments({ post }) {
   const [next, setNext] = useState(imagePerRow);
+
+  const {setViewComment} = useContext(StateContext)
 
   const handleMoreComments = () => {
     setNext(next + imagePerRow);
@@ -32,7 +36,7 @@ function Comments({ post,setViewComment }) {
 
           <button
             className="flex ml-5 w-36 p-2 mb-3 items-center mt-5 justify-center border-none gap-2 bg-emerald-700 text-neutral-700 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white"
-            // onClick={() => {setViewComment((viewComment) => !viewComment)}}
+            onClick={() => {setViewComment((viewComment) => !viewComment)}}
           >
             Close
           </button>
