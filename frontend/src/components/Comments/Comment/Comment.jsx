@@ -5,12 +5,14 @@ import { FaThumbsUp} from "react-icons/fa";
 import { useDispatch } from 'react-redux';
 
 
-function Comment({post}) {
-    const dispatch = useDispatch();
+function Comment({comment,post}) {
+  const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
-
+  
   const { createdBy: userDetails } = post;
+  const {comments} = post
   const date = new Date() - new Date(post.createdAt);
+  console.log(comment)
   
   const millisToMinutesAndSeconds = (millis) => {
     let minutes = Math.floor(millis / 60000);
@@ -48,7 +50,7 @@ function Comment({post}) {
 
   return (
     <div>
-        <div className="flex items-center m-5">
+        <div className="flex items-center ml-4">
             {userDetails?.imageUrl ? (
               <img
                 src={userDetails.imageUrl}
@@ -63,6 +65,18 @@ function Comment({post}) {
               <h6 className="ml-2"> Posted {currentDate} ago</h6>
               <hr />
             </div>
+            
+          </div>
+          <div className='ml-5'>
+            <p className='text-lg'>{comment.comment}</p>
+
+            <button
+            // onClick={() => dispatch(likePost(post._id))}
+            className="flex w-20 p-2 items-center mt-5 justify-center border-none gap-2 bg-emerald-700 text-neutral-700 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white"
+          >
+            <FaThumbsUp />
+            {comment?.likes?.length}
+          </button>
           </div>
           {user?._id === userDetails?._id && (
             <div className="m-10 flex">
@@ -73,6 +87,7 @@ function Comment({post}) {
               {/* <AiFillDelete onClick={() => dispatch(deletePost(post._id))} /> */}
             </div>
           )}
+          
         </div>
 
   )

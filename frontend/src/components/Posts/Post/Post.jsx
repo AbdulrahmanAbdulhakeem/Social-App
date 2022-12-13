@@ -102,7 +102,7 @@ function Post({ post }) {
             />
           )}
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-1">
           <button
             onClick={() => dispatch(likePost(post._id))}
             className="flex w-20 p-2 items-center justify-center gap-2 border-none bg-emerald-700 text-neutral-700 m-4 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white"
