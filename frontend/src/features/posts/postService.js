@@ -85,6 +85,19 @@ const likeComment = async({ postId:post_id ,commentId :comment_id } , token) => 
     return data
 }
 
+//Delete Comment
+const deleteComment = async({ postId:post_id ,commentId :comment_id } , token) => {
+    const config  = {
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    }
+
+    const {data} = await axios.delete(API_URL + `${post_id}/${comment_id}` , config)
+    console.log(data)
+
+    return data
+}
 
 const postService = {
     createPost,
@@ -93,5 +106,6 @@ const postService = {
     deletePost,
     commentOnPost,
     likeComment,
+    deleteComment,
 }
 export default postService

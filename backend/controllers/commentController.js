@@ -76,8 +76,9 @@ const deleteComment = async (req, res) => {
 
   await post.save();
 
-  res.status(StatusCodes.OK).json(post.comments);
-};
+  const posts = await Post.find().sort('-createdAt').populate('createdBy' ,'name imageUrl' );
+
+  res.status(StatusCodes.OK).json(posts);};
 
 module.exports = {
   likeComment,

@@ -3,7 +3,7 @@ import profilePic from "../../../assets/blank-pic.png";
 import { AiFillDelete, AiOutlineEdit } from "react-icons/ai";
 import { FaThumbsUp } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { likeComment } from "../../../features/posts/postSlice";
+import { deleteComment, likeComment } from "../../../features/posts/postSlice";
 
 function Comment({ comment, post }) {
   const dispatch = useDispatch();
@@ -16,12 +16,21 @@ function Comment({ comment, post }) {
 
   const onLikeComment = () => {
     let commentData = {
-      postId:post._id,
-      commentId:comment._id
-    }
+      postId: post._id,
+      commentId: comment._id,
+    };
 
-    dispatch(likeComment(commentData))
-  }
+    dispatch(likeComment(commentData));
+  };
+
+  const onDeleteComment = () => {
+    let commentData = {
+      postId: post._id,
+      commentId: comment._id,
+    };
+
+    dispatch(deleteComment(commentData));
+  };
 
   const millisToMinutesAndSeconds = (millis) => {
     let minutes = Math.floor(millis / 60000);
@@ -78,23 +87,31 @@ function Comment({ comment, post }) {
       <div className="ml-5">
         <p className="text-lg">{comment.comment}</p>
 
-        <button
-          onClick={onLikeComment}
-          className="flex w-20 p-2 items-center mt-5 justify-center border-none gap-2 bg-emerald-700 text-neutral-700 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white"
-        >
-          <FaThumbsUp />
-          {comment?.likes?.length}
-        </button>
-      </div>
-      {/* {user?._id === userDetails?._id && (
-            <div className="m-10 flex">
-              <AiOutlineEdit className="mx-5" onClick={onOpenModal} />
+        <div className="flex h-16">
+          <button
+            onClick={onLikeComment}
+            className="flex w-20 p-2 items-center mt-5 justify-center border-none gap-2 bg-emerald-700 text-neutral-700 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white"
+          >
+            <FaThumbsUp />
+            {comment?.likes?.length}
+          </button>
+          {user?._id === userDetails?._id && (
+            <div className="ml-5">
+              {/* <AiOutlineEdit className="mx-5" onClick={onOpenModal} />
               <Modal open={false} onClose={onCloseModal} center>
                 <h2>Simple centered modal</h2>
-              </Modal>
-              <AiFillDelete onClick={() => dispatch(deletePost(post._id))} />
+              </Modal> */}
+              <button
+                onClick={onDeleteComment}
+                className="flex items-center p-2 mt-5 bg-emerald-700 text-neutral-700 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white"
+              >
+                Delete
+                <AiFillDelete className="ml-1" />
+              </button>
             </div>
-          )} */}
+          )}
+        </div>
+      </div>
     </div>
   );
 }
