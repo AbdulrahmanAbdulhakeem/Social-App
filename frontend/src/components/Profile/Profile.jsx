@@ -13,10 +13,6 @@ function Profile() {
   const { user } = useSelector((state) => state.auth);
   // console.log(user)
 
-  useEffect(() => {
-    
-  },[user])
-
   const updateProfile = (e) => {
     e.preventDefault();
     setEditProfile((edit) => !edit);

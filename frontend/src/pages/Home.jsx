@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import {Profile,Header,PostCreator, Spinner} from "../components"
 import PostSection from "./PostSection";
 import { getAllPosts } from "../features/posts/postSlice";
-// import React from "react";
 
 export const DataContext = React.createContext();
 
@@ -28,10 +27,10 @@ function Home() {
       navigate('/register')
     }
 
-    dispatch(getAllPosts());  
-
-  }, []);
   
+    dispatch(getAllPosts());  
+  }, []);
+
   if(isLoading) {
     return <Spinner />
   }

@@ -152,7 +152,7 @@ function Updateprofile({ setEditProfile }) {
           </button>
           <button
               onClick={onStopUpdate}
-              className="flex items-center justify-center w-60 h-12 border-none bg-emerald-700 text-neutral-700 my-3 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white md:w-80 mx-auto"
+              className="w-60 h-12 border-none bg-emerald-700 text-neutral-700 my-3 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white md:w-80 mx-auto"
             >
               Abort Update
             </button>
