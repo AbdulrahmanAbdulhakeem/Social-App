@@ -6,13 +6,13 @@ import { useDispatch } from "react-redux";
 import { deleteComment, likeComment } from "../../../features/posts/postSlice";
 
 function Comment({ comment, post }) {
-  const dispatch = useDispatch();
+   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const { createdBy: userDetails } = post;
+  const [createdBy] = post.comments;
   // const { comments } = post;
   const date = new Date() - new Date(post.createdAt);
-  // console.log(comment);
+  console.log(comment.createdBy);
 
   const onLikeComment = () => {
     let commentData = {
@@ -69,9 +69,9 @@ function Comment({ comment, post }) {
   return (
     <div className="mb-4">
       <div className="flex items-center ml-5 ">
-        {userDetails?.imageUrl ? (
+        {comment?.createdBy?.imageUrl ? (
           <img
-            src={userDetails.imageUrl}
+            src={comment.createdBy?.imageUrl}
             alt="profilePic"
             className="avatar-img"
           />
@@ -79,7 +79,7 @@ function Comment({ comment, post }) {
           <img src={profilePic} alt="Profile Pic" className="avatar-img" />
         )}
         <div className="flex flex-col">
-          <h6 className="ml-2">{userDetails?.name}</h6>
+          <h6 className="ml-2">{comment?.createdBy?.name}</h6>
           <h6 className="ml-2"> Posted {currentDate} ago</h6>
           <hr />
         </div>
@@ -95,7 +95,7 @@ function Comment({ comment, post }) {
             <FaThumbsUp />
             {comment?.likes?.length}
           </button>
-          {user?._id === userDetails?._id && (
+          {user?._id === comment?.createdBy?._id && (
             <div className="ml-5">
               {/* <AiOutlineEdit className="mx-5" onClick={onOpenModal} />
               <Modal open={false} onClose={onCloseModal} center>
