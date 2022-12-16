@@ -31,9 +31,9 @@ function Home() {
     dispatch(getAllPosts());  
   }, []);
 
-  if(isLoading) {
-    return <Spinner />
-  }
+  // if(isLoading) {
+  //   return <Spinner />
+  // }
 
   return (
     <DataContext.Provider value={{posts}}>
