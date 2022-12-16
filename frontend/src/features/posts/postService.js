@@ -5,7 +5,6 @@ const API_URL = "http://localhost:5000/api/v1/post/"
 
 //Create New Post
 const createPost = async(postData,token) => {
-    // console.log(postData)
     const config  = {
         headers:{
             Authorization:`Bearer ${token}`
@@ -13,7 +12,6 @@ const createPost = async(postData,token) => {
     }
 
     const {data} = await axios.post(API_URL,postData,config)
-    console.log(data)
     return data
 }
 
@@ -38,7 +36,6 @@ const likePost = async(postId , token) => {
     }
 
     const {data} = await axios.patch(API_URL + 'like/' + postId ,{params:{id:postId}}, config)
-    console.log(data)
 
     return data
 }
@@ -52,7 +49,6 @@ const commentOnPost = async({comment , postId} , token) => {
     }
 
     const {data} = await axios.post(API_URL + `comment/${postId}` , {comment} , config)
-    console.log(data)
 
     return data
 }
@@ -66,7 +62,6 @@ const deletePost = async(postId , token) => {
     }
     
     const {data} = await axios.delete(API_URL + postId , config)
-    console.log(data)
     
     return data
 }
@@ -80,7 +75,6 @@ const likeComment = async({ postId:post_id ,commentId :comment_id } , token) => 
     }
 
     const {data} = await axios.patch(API_URL + `${post_id}/${comment_id}/like`,{params:{post_id , comment_id}} , config)
-    console.log(data)
 
     return data
 }
@@ -94,7 +88,6 @@ const deleteComment = async({ postId:post_id ,commentId :comment_id } , token) =
     }
 
     const {data} = await axios.delete(API_URL + `${post_id}/${comment_id}` , config)
-    console.log(data)
 
     return data
 }

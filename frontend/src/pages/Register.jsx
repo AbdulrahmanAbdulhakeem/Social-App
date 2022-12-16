@@ -68,7 +68,7 @@ function Register() {
 
     let userData = {
       email: "nai@gmail.com",
-      password: "123456",
+      password: "bitcoin123$",
     };
 
     dispatch(login(userData));

@@ -48,8 +48,6 @@ function Updateprofile({ setEditProfile }) {
       dispatch(updateProfile(userData));
     }
 
-    console.log(imageUrl);
-
     let userData = {
       name,
       email,
