@@ -16,6 +16,8 @@ function CommentCreator({postId}) {
         postId
     }
     dispatch(commentOnPost(commentData))
+
+    setComment("")
   };
 
   return (

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import {FaCamera, FaEdit } from "react-icons/fa";
+import { FaCamera, FaEdit } from "react-icons/fa";
 import axios from "axios";
 import { createPost } from "../../features/posts/postSlice";
 
@@ -10,17 +10,16 @@ function PostCreator() {
     image: "",
   });
 
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
 
   const { post, image } = formData;
 
-  const onSubmit = async(e) => {
-    e.preventDefault()
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
     let imageUrl;
 
-    if(image){
+    if (image) {
       const formData = new FormData();
       formData.append("image", image);
 
@@ -42,15 +41,20 @@ function PostCreator() {
       dispatch(createPost(postData));
     }
 
-    if(!image) {
-      imageUrl = ""
+    if (!image) {
+      imageUrl = "";
       let postData = {
         post,
-        imageUrl
-      }
+        imageUrl,
+      };
 
-      dispatch(createPost(postData))
+      dispatch(createPost(postData));
     }
+
+    setFormData({
+      post: "",
+      image: "",
+    });
   };
 
   const onChange = (e) => {
