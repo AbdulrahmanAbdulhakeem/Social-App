@@ -13,16 +13,11 @@
 
 body {
   margin: 0;
-  font-family:'Cabin' , Sans-Serif;
+  font-family: 'Cabin', Sans-Serif;
   background-color: #f0f4f8;
 }
 
-
-/* a{
-  text-decoration: none;
-} */
-
-.profile-img{
+.profile-img {
   height: 150px;
   width: 150px;
   border-radius: 50%;
@@ -30,7 +25,7 @@ body {
   margin-bottom: 1.5rem;
 }
 
-.avatar-img{
+.avatar-img {
   height: 50px;
   width: 50px;
   border-radius: 50%;
@@ -43,11 +38,7 @@ body {
   width: 450px;
 }
 
-.tw-absolute-center {
-  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
-}
-
-.file-btn{
+.file-btn {
   display: none;
 }
 
@@ -77,13 +68,8 @@ body {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
-
-/* @media (max-width:280px) {
-  .container{
-    width: 100%;
-  }
-} */

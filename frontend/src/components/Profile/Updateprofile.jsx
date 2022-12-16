@@ -1,15 +1,12 @@
 import profilePic from "../../assets/blank-pic.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { logout, reset, updateProfile } from "../../features/auth/authSlice";
+import {updateProfile } from "../../features/auth/authSlice";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { AiOutlineClose } from "react-icons/ai";
 import axios from "axios";
 
 function Updateprofile({ setEditProfile }) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.auth);
 
@@ -20,7 +17,7 @@ function Updateprofile({ setEditProfile }) {
     image: "",
   });
 
-  const { name, email, password, image } = formData;
+  const { name, email, image } = formData;
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -61,11 +58,7 @@ function Updateprofile({ setEditProfile }) {
     console.log(userData);
 
     dispatch(updateProfile(userData));
-    // dispatch(logout())
-    // dispatch(reset())
     toast("Updating...");
-    toast("It Is Advisable To Re-Login");
-    // navigate('/')
   };
 
   const onStopUpdate = (e) => {
@@ -131,19 +124,6 @@ function Updateprofile({ setEditProfile }) {
               onChange={onChange}
             />
           </div>
-
-          {/* <div>
-            <label className="block mb-2">Password</label>
-            <input
-              className="p-3 mb-3 border-emerald-700 border-2 rounded-md w-60 h-12 md:w-80 focus:outline-none"
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              onChange={onChange}
-              required
-            />
-          </div> */}
           <button
             type="submit"
             className="w-60 h-12 border-none bg-emerald-700 text-neutral-700 my-3 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white md:w-80 mx-auto"

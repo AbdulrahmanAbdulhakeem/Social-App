@@ -2,7 +2,7 @@ import React,{ useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import {useSelector,useDispatch} from 'react-redux'
 import { toast } from "react-toastify";
-import {Profile,Header,PostCreator, Spinner} from "../components"
+import {Profile,Header} from "../components"
 import PostSection from "./PostSection";
 import { getAllPosts } from "../features/posts/postSlice";
 
@@ -14,7 +14,7 @@ function Home() {
   const navigate = useNavigate();
 
   const {user} = useSelector((state) => state.auth)
-  const { posts, isSuccess, isLoading, isError, message } = useSelector(
+  const { posts, isError } = useSelector(
     (state) => state.post
   );
 
@@ -30,10 +30,6 @@ function Home() {
   
     dispatch(getAllPosts());  
   }, []);
-
-  // if(isLoading) {
-  //   return <Spinner />
-  // }
 
   return (
     <DataContext.Provider value={{posts}}>

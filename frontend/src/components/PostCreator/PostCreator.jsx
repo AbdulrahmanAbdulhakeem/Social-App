@@ -1,7 +1,5 @@
-import { useState ,useEffect} from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import {useNavigate} from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {FaCamera, FaEdit } from "react-icons/fa";
 import axios from "axios";
 import { createPost } from "../../features/posts/postSlice";
@@ -21,7 +19,6 @@ function PostCreator() {
     e.preventDefault()
 
     let imageUrl;
-    let userData = {}
 
     if(image){
       const formData = new FormData();
@@ -35,9 +32,6 @@ function PostCreator() {
           "content-type": "multipart/form-data",
         },
       });
-
-      // console.log(data)
-
       imageUrl = data.data.url;
 
       let postData = {
@@ -57,8 +51,6 @@ function PostCreator() {
 
       dispatch(createPost(postData))
     }
-
-    toast('Beware Post Can Be Delted Till some Minute Has Passed')
   };
 
   const onChange = (e) => {
@@ -74,7 +66,6 @@ function PostCreator() {
       image: e.target.files[0],
     }));
   };
-  // console.log(image , post)
 
   return (
     <div className="border-emerald-900 w-11/12">

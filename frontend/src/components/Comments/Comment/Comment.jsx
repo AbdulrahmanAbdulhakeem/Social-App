@@ -1,6 +1,6 @@
 import React from "react";
 import profilePic from "../../../assets/blank-pic.png";
-import { AiFillDelete, AiOutlineEdit } from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
 import { FaThumbsUp } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { deleteComment, likeComment } from "../../../features/posts/postSlice";
@@ -9,8 +9,6 @@ function Comment({ comment, post }) {
    const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const [createdBy] = post.comments;
-  // const { comments } = post;
   const date = new Date() - new Date(post.createdAt);
   console.log(comment.createdBy);
 
@@ -97,10 +95,6 @@ function Comment({ comment, post }) {
           </button>
           {user?._id === comment?.createdBy?._id && (
             <div className="ml-5">
-              {/* <AiOutlineEdit className="mx-5" onClick={onOpenModal} />
-              <Modal open={false} onClose={onCloseModal} center>
-                <h2>Simple centered modal</h2>
-              </Modal> */}
               <button
                 onClick={onDeleteComment}
                 className="flex items-center p-2 mt-5 bg-emerald-700 text-neutral-700 rounded-lg transition duration-300 hover:bg-emerald-900 hover:text-white"

@@ -5,8 +5,6 @@ import Post from './Post/Post'
 
 function Posts() {
     const {posts} = useContext(DataContext)
-    // const {post} = posts
-    // console.log(user)
 
   return (
     <div>
